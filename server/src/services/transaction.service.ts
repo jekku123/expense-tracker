@@ -22,12 +22,6 @@ export class TransactionService implements ITransactionService {
   }
 
   async updateTransaction(id: string, transaction: ITransaction): Promise<ITransaction | null> {
-    // const updatedTransaction = await Transaction.findByIdAndUpdate(transaction._id, transaction, {
-    //   new: true,
-    // });
-    // if (!updatedTransaction) {
-    //   throw new AppError('Transaction not found', 404);
-    // }
     const foundTransaction = await Transaction.findById(id);
 
     if (!foundTransaction) {

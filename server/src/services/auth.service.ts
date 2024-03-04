@@ -37,11 +37,12 @@ export class AuthService implements IAuthService {
     const { accessToken, refreshToken } = this.tokenService.generateTokens({
       user: {
         id: user.id,
+        username: user.username,
         email: user.email,
       },
     });
 
-    logger.log(`User with email ${email} logged in`, AuthService.name);
+    logger.info(`User with email ${email} logged in`, AuthService.name);
 
     return { accessToken, refreshToken };
   }
@@ -64,9 +65,12 @@ export class AuthService implements IAuthService {
     const accessToken = this.tokenService.generateAccessToken({
       user: {
         id: user.id,
+        username: user.username,
         email: user.email,
       },
     });
+
+    logger.info(`User with email ${user.email} refreshed token`, AuthService.name);
 
     return accessToken;
   }

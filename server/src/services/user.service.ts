@@ -11,16 +11,14 @@ import { logger } from './logger.service';
 
 @injectable()
 export class UserService implements IUserService {
-  async register(email: string, password: string): Promise<UserType> {
+  async register(username: string, email: string, password: string): Promise<UserType> {
     const user = await User.findOne({ email });
 
     if (user) {
       throw new AppError(ERROR_MESSAGES.USER_ALREADY_EXISTS, STATUS_CODES.CONFLICT, { email });
     }
 
-    console.log(email, password);
-
-    const userObj = new User({ email, password });
+    const userObj = new User({ username, email, password });
     const newUser = await userObj.save();
 
     logger.log(`User with email ${email} registered`, UserService.name);

@@ -12,10 +12,10 @@ export class UserController {
   }
 
   async onRegister(req: Request, res: Response, next: NextFunction) {
-    const { email, password } = req.body;
+    const { username, email, password } = req.body;
 
     try {
-      const user = await this.userService.register(email, password);
+      const user = await this.userService.register(username, email, password);
       res.status(201).send(user);
     } catch (error) {
       next(error);
