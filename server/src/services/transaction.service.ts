@@ -1,13 +1,21 @@
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 
 import Transaction, { ITransaction } from '../models/transaction';
+import { ILogger } from '../types/ILogger';
 import { ITransactionService } from '../types/ITransactionService';
+import { INTERFACE_TYPE } from '../utils/dependencies';
 import AppError from '../utils/errors/AppError';
 import { ERROR_MESSAGES } from '../utils/errors/errorMessages';
 import { STATUS_CODES } from '../utils/errors/statusCodes';
 
 @injectable()
 export class TransactionService implements ITransactionService {
+  private logger: ILogger;
+
+  constructor(@inject(INTERFACE_TYPE.Logger) logger: ILogger) {
+    this.logger = logger;
+  }
+
   async getTransactions(userId: string): Promise<ITransaction[]> {
     const transactions = await Transaction.find({ userId });
     if (!transactions) {
@@ -18,6 +26,7 @@ export class TransactionService implements ITransactionService {
 
   async createTransaction(transaction: ITransaction): Promise<ITransaction> {
     const newTransaction = await Transaction.create(transaction);
+    this.logger.info(`Transaction with id ${newTransaction.id} created`, TransactionService.name);
     return newTransaction;
   }
 

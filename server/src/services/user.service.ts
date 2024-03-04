@@ -1,4 +1,4 @@
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 
 import { ERROR_MESSAGES } from '../utils/errors/errorMessages';
 
@@ -6,11 +6,18 @@ import User, { UserType } from '../models/user';
 import AppError from '../utils/errors/AppError';
 import { STATUS_CODES } from '../utils/errors/statusCodes';
 
+import { ILogger } from '../types/ILogger';
 import { IUserService } from '../types/IUserService';
-import { logger } from './logger.service';
+import { INTERFACE_TYPE } from '../utils/dependencies';
 
 @injectable()
 export class UserService implements IUserService {
+  private logger: ILogger;
+
+  constructor(@inject(INTERFACE_TYPE.Logger) logger: ILogger) {
+    this.logger = logger;
+  }
+
   async register(username: string, email: string, password: string): Promise<UserType> {
     const user = await User.findOne({ email });
 
@@ -21,7 +28,7 @@ export class UserService implements IUserService {
     const userObj = new User({ username, email, password });
     const newUser = await userObj.save();
 
-    logger.log(`User with email ${email} registered`, UserService.name);
+    this.logger.info(`User with email ${email} registered`, UserService.name);
 
     return newUser;
   }
@@ -33,7 +40,7 @@ export class UserService implements IUserService {
       throw new AppError(ERROR_MESSAGES.USER_NOT_FOUND, STATUS_CODES.NOT_FOUND, { id });
     }
 
-    logger.log(`User with id ${id} fetched`, UserService.name);
+    this.logger.info(`User with id ${id} fetched`, UserService.name);
 
     return user;
   }
@@ -70,7 +77,7 @@ export class UserService implements IUserService {
       throw new AppError(ERROR_MESSAGES.INTERNAL_SERVER_ERROR, STATUS_CODES.INTERNAL_SERVER_ERROR);
     }
 
-    logger.log(`User with email ${email} updated password`, UserService.name);
+    this.logger.info(`User with email ${email} updated password`, UserService.name);
 
     return updatedUser;
   }

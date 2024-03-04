@@ -5,6 +5,8 @@ import { validateToken } from '../middlewares/validateToken';
 import { UserService } from '../services/user.service';
 import { INTERFACE_TYPE } from '../utils/dependencies';
 
+import Logger from '../services/logger.service';
+import { ILogger } from '../types/ILogger';
 import { IUserService } from '../types/IUserService';
 
 const router = express.Router();
@@ -13,6 +15,7 @@ const container = new Container();
 
 container.bind(INTERFACE_TYPE.UserController).to(UserController);
 container.bind<IUserService>(INTERFACE_TYPE.UserService).to(UserService);
+container.bind<ILogger>(INTERFACE_TYPE.Logger).to(Logger);
 
 const controller = container.get<UserController>(INTERFACE_TYPE.UserController);
 

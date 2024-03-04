@@ -2,12 +2,12 @@ import express from 'express';
 import { Container } from 'inversify';
 import { AuthController } from '../controllers/auth.controller';
 import { AuthService } from '../services/auth.service';
-import { INTERFACE_TYPE } from '../utils/dependencies';
-
+import Logger from '../services/logger.service';
 import { TokenService } from '../services/token.service';
 import { IAuthService } from '../types/IAuthService';
-
+import { ILogger } from '../types/ILogger';
 import { ITokenService } from '../types/ITokenService';
+import { INTERFACE_TYPE } from '../utils/dependencies';
 
 const router = express.Router();
 
@@ -17,6 +17,7 @@ container.bind(INTERFACE_TYPE.AuthController).to(AuthController);
 
 container.bind<IAuthService>(INTERFACE_TYPE.AuthService).to(AuthService);
 container.bind<ITokenService>(INTERFACE_TYPE.TokenService).to(TokenService);
+container.bind<ILogger>(INTERFACE_TYPE.Logger).to(Logger);
 
 const controller = container.get<AuthController>(INTERFACE_TYPE.AuthController);
 

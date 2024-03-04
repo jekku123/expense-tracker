@@ -7,15 +7,20 @@ import { ERROR_MESSAGES } from '../utils/errors/errorMessages';
 import { STATUS_CODES } from '../utils/errors/statusCodes';
 
 import User from '../models/user';
+import { ILogger } from '../types/ILogger';
 import { ITokenService } from '../types/ITokenService';
-import { logger } from './logger.service';
 
 @injectable()
 export class AuthService implements IAuthService {
   private tokenService: ITokenService;
+  private logger: ILogger;
 
-  constructor(@inject(INTERFACE_TYPE.TokenService) tokenService: ITokenService) {
+  constructor(
+    @inject(INTERFACE_TYPE.TokenService) tokenService: ITokenService,
+    @inject(INTERFACE_TYPE.Logger) logger: ILogger
+  ) {
     this.tokenService = tokenService;
+    this.logger = logger;
   }
 
   async login(
@@ -42,7 +47,7 @@ export class AuthService implements IAuthService {
       },
     });
 
-    logger.info(`User with email ${email} logged in`, AuthService.name);
+    this.logger.info(`User with email ${email} logged in`, AuthService.name);
 
     return { accessToken, refreshToken };
   }
@@ -70,7 +75,7 @@ export class AuthService implements IAuthService {
       },
     });
 
-    logger.info(`User with email ${user.email} refreshed token`, AuthService.name);
+    this.logger.info(`User with email ${user.email} refreshed token`, AuthService.name);
 
     return accessToken;
   }

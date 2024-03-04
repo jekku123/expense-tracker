@@ -1,11 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import { JsonWebTokenError } from 'jsonwebtoken';
-import { logger } from '../services/logger.service';
+import Logger from '../services/logger.service';
 import AppError from '../utils/errors/AppError';
 import { ERROR_MESSAGES } from '../utils/errors/errorMessages';
 import { STATUS_CODES } from '../utils/errors/statusCodes';
 
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
+  const logger = new Logger();
+
   if (err instanceof AppError) {
     const { statusCode } = err;
     logger.error(err);

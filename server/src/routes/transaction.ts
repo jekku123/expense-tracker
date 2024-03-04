@@ -5,7 +5,9 @@ import { validateToken } from '../middlewares/validateToken';
 import { UserService } from '../services/user.service';
 import { INTERFACE_TYPE } from '../utils/dependencies';
 
+import Logger from '../services/logger.service';
 import { TransactionService } from '../services/transaction.service';
+import { ILogger } from '../types/ILogger';
 import { ITransactionService } from '../types/ITransactionService';
 import { IUserService } from '../types/IUserService';
 
@@ -16,6 +18,7 @@ const container = new Container();
 container.bind(INTERFACE_TYPE.TransactionController).to(TransactionController);
 container.bind<ITransactionService>(INTERFACE_TYPE.TransactionService).to(TransactionService);
 container.bind<IUserService>(INTERFACE_TYPE.UserService).to(UserService);
+container.bind<ILogger>(INTERFACE_TYPE.Logger).to(Logger);
 
 const controller = container.get<TransactionController>(INTERFACE_TYPE.TransactionController);
 

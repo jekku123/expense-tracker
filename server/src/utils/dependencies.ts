@@ -13,12 +13,6 @@ const services = {
 };
 
 export const INTERFACE_TYPE = {
-  UserService: Symbol.for('UserService'),
-  AuthService: Symbol.for('AuthService'),
-  TransactionService: Symbol.for('TransactionService'),
-  UserController: Symbol.for('UserController'),
-  TransactionController: Symbol.for('TransactionController'),
-  AuthController: Symbol.for('AuthController'),
-  Logger: Symbol.for('Logger'),
-  TokenService: Symbol.for('TokenService'),
+  ...controllers,
+  ...services,
 };
