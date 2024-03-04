@@ -10,7 +10,6 @@ export default function Layout() {
 
   const navigate = useNavigate();
 
-  // , isError, error
   const [sendLogout, { isLoading, isSuccess }] = useSendLogoutMutation();
 
   useEffect(() => {

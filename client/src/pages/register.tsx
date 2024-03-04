@@ -1,10 +1,13 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useTitle } from '@/hooks/useTitle';
 import { useCreateUserMutation } from '@/redux/api/userApiSlice';
 
 import { useState } from 'react';
 
 export default function Register() {
+  useTitle('Register');
+
   const [formData, setFormData] = useState({
     username: '',
     email: '',

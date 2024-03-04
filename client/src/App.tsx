@@ -7,7 +7,7 @@ import './index.css';
 import PersistLogin from './components/persist-login.tsx';
 import RequireAuth from './components/require-auth.tsx';
 import Home from './pages/home.tsx';
-import Layout from './pages/layout.tsx';
+import Layout from './components/layout.tsx';
 import Login from './pages/login.tsx';
 import Register from './pages/register.tsx';
 import Tracker from './pages/tracker.tsx';

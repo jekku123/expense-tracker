@@ -5,11 +5,14 @@ import usePersist from '@/hooks/usePersist';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useTitle } from '@/hooks/useTitle';
 import { useLoginMutation } from '@/redux/api/authApiSlice';
 import { setCredentials } from '@/redux/features/authSlice';
 import { useAppDispatch } from '@/redux/hooks';
 
-const Login = () => {
+export default function Login() {
+  useTitle('Login');
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [persist, setPersist] = usePersist();
@@ -83,5 +86,4 @@ const Login = () => {
       </footer>
     </section>
   );
-};
-export default Login;
+}

@@ -1,5 +1,6 @@
 import CreateTransaction from '@/components/create-transaction';
 import { Button } from '@/components/ui/button';
+import { useTitle } from '@/hooks/useTitle';
 import {
   useDeleteTransactionMutation,
   useGetAllTransactionsQuery,
@@ -8,6 +9,8 @@ import {
 import { ITransaction } from '@/types';
 
 export default function Tracker() {
+  useTitle('Tracker');
+
   const {
     data: transactions,
     isLoading,
@@ -23,9 +26,14 @@ export default function Tracker() {
   const [updateTransaction] = useUpdateTransactionMutation();
   const [deleteTransaction] = useDeleteTransactionMutation();
 
+  const categories = transactions?.map((transaction: ITransaction) => transaction.category);
+  const uniqueCategories = Array.from(new Set(categories));
+  console.log(uniqueCategories);
+
   return (
     <div>
       <h1>Tracker</h1>
+      <CreateTransaction />
       <div>
         {isLoading && <p>Loading...</p>}
         {isError && <p>{(error as { data: { message: string } }).data!.message}</p>}
@@ -36,10 +44,11 @@ export default function Tracker() {
               <div key={transaction._id}>
                 <p>{transaction.title}</p>
                 <p>{transaction.amount}</p>
+                <p>{transaction.date}</p>
+                <p>{transaction.description}</p>
                 <p>{transaction.category}</p>
                 <p>{transaction.transactionType}</p>
 
-                <Button onClick={() => deleteTransaction(transaction._id!)}>Delete</Button>
                 <Button
                   onClick={() => {
                     updateTransaction({
@@ -55,11 +64,11 @@ export default function Tracker() {
                 >
                   Update
                 </Button>
+                <Button onClick={() => deleteTransaction({ id: transaction._id! })}>Delete</Button>
               </div>
             );
           })}
       </div>
-      <CreateTransaction />
     </div>
   );
 }
