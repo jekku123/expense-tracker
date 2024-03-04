@@ -14,37 +14,21 @@ export default function Tracker() {
     isSuccess,
     isError,
     error,
-  } = useGetAllTransactionsQuery('transactionList', {
+  } = useGetAllTransactionsQuery('transactions', {
     // pollingInterval: 15000,
-    refetchOnFocus: true,
+    // refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
   });
 
-  const [
-    updateTransaction,
-    { isLoading: isUpdLoading, isSuccess: isUpdSuccess, isError: isUpdError, error: updError },
-  ] = useUpdateTransactionMutation();
-
-  const [deleteTransaction, { isSuccess: isDelSuccess, isError: isDelError, error: delError }] =
-    useDeleteTransactionMutation();
-
-  const handleDelete = async (id: string) => {
-    try {
-      const response = await deleteTransaction({ id });
-      console.log(response);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  console.log(transactions);
+  const [updateTransaction] = useUpdateTransactionMutation();
+  const [deleteTransaction] = useDeleteTransactionMutation();
 
   return (
     <div>
       <h1>Tracker</h1>
       <div>
         {isLoading && <p>Loading...</p>}
-        {isError && <p>{error}</p>}
+        {isError && <p>{(error as { data: { message: string } }).data!.message}</p>}
         {isSuccess &&
           transactions &&
           transactions.map((transaction: ITransaction) => {
@@ -55,7 +39,7 @@ export default function Tracker() {
                 <p>{transaction.category}</p>
                 <p>{transaction.transactionType}</p>
 
-                <Button onClick={() => handleDelete(transaction._id!)}>Delete</Button>
+                <Button onClick={() => deleteTransaction(transaction._id!)}>Delete</Button>
                 <Button
                   onClick={() => {
                     updateTransaction({

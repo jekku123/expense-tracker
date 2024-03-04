@@ -12,7 +12,7 @@ export default function PersistLogin() {
 
   const [trueSuccess, setTrueSuccess] = useState(false);
 
-  const [refresh, { isUninitialized, isLoading, isSuccess }] = useRefreshMutation();
+  const [refresh, { isUninitialized, isLoading, isSuccess, isError }] = useRefreshMutation();
 
   useEffect(() => {
     // Why live like this?
@@ -40,16 +40,14 @@ export default function PersistLogin() {
 
   let content;
   if (!persist) {
-    // persist: no
     content = <Outlet />;
   } else if (isLoading) {
-    //persist: yes, token: no
     content = <p>Loading...</p>;
+  } else if (isError) {
+    content = <Outlet />;
   } else if (isSuccess && trueSuccess) {
-    //persist: yes, token: yes
     content = <Outlet />;
   } else if (token && isUninitialized) {
-    //persist: yes, token: yes
     content = <Outlet />;
   }
 

@@ -37,7 +37,7 @@ export default function Layout() {
           </nav>
           {session ? (
             <>
-              <p>Logged in as {session.user.email}</p>
+              <p>Logged in as {session.user.username || session.user.email}</p>
               <Button variant="secondary" disabled={isLoading} onClick={sendLogout}>
                 Logout
               </Button>

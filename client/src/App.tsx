@@ -18,20 +18,21 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
+        path: 'register',
+        element: <Register />,
+      },
+      {
+        path: 'login',
+        element: <Login />,
+      },
+      {
         element: <PersistLogin />,
         children: [
           {
             index: true,
             element: <Home />,
           },
-          {
-            path: 'register',
-            element: <Register />,
-          },
-          {
-            path: 'login',
-            element: <Login />,
-          },
+
           {
             element: <RequireAuth />,
             children: [

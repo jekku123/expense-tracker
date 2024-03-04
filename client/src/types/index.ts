@@ -10,3 +10,10 @@ export interface ITransaction {
   _updatedAt?: string;
   userId: string;
 }
+
+export interface IUser {
+  user: {
+    username: string;
+    email: string;
+  };
+}

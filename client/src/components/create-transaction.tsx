@@ -4,8 +4,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 
 export default function CreateTransaction() {
-  const [addTransactionNote, { isLoading, isSuccess, isError, error }] =
-    useAddNewTransactionMutation();
+  const [addTransactionNote] = useAddNewTransactionMutation();
 
   const [formData, setFormData] = useState({
     title: '',
