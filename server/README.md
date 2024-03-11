@@ -8,8 +8,11 @@ The backend is build using MSC (Model, Service, Controller) architecture. The `m
 
 ## Features
 
+- MSC (Model, Service, Controller) architecture
 - Inversify for dependency injection
-- Authentication using JWT
+- Authentication using JWT and HTTP-only cookies with Refresh Token
 - CRUD operations for transactions
 - Error handling middleware
-- Logger service using Winston
+- Logger service for errors and logs using Winston
+- MongoDB with Mongoose
+- Security using Helmet and CORS

@@ -1,6 +1,6 @@
 # Expense Tracker Frontend
 
-This is the frontend for the expense tracker app. It is built using React.js, Redux Toolkit and Shadcn UI.
+This is the frontend for the expense tracker app. It is built using React.js, Redux Toolkit, Zod and Shadcn UI.
 
 ## Features
 
