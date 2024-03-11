@@ -15,9 +15,9 @@ const container = new Container();
 
 container.bind(INTERFACE_TYPE.AuthController).to(AuthController);
 
+container.bind<ILogger>(INTERFACE_TYPE.Logger).to(Logger);
 container.bind<IAuthService>(INTERFACE_TYPE.AuthService).to(AuthService);
 container.bind<ITokenService>(INTERFACE_TYPE.TokenService).to(TokenService);
-container.bind<ILogger>(INTERFACE_TYPE.Logger).to(Logger);
 
 const controller = container.get<AuthController>(INTERFACE_TYPE.AuthController);
 

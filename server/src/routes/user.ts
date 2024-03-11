@@ -14,6 +14,7 @@ const router = express.Router();
 const container = new Container();
 
 container.bind(INTERFACE_TYPE.UserController).to(UserController);
+
 container.bind<IUserService>(INTERFACE_TYPE.UserService).to(UserService);
 container.bind<ILogger>(INTERFACE_TYPE.Logger).to(Logger);
 

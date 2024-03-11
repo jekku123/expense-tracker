@@ -13,7 +13,6 @@ export interface ITransaction {
   category: string;
   description?: string;
   transactionType: TransactionType;
-  date?: Date;
   userId: Schema.Types.ObjectId;
   _createdAt: Date;
 }
@@ -44,10 +43,6 @@ const transactionSchema = new Schema<ITransaction, TransactionModel, Transaction
     transactionType: {
       type: String,
       required: [true, 'Transaction Type is required'],
-    },
-
-    date: {
-      type: Date,
     },
 
     userId: {

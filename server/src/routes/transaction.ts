@@ -16,9 +16,10 @@ const router = express.Router();
 const container = new Container();
 
 container.bind(INTERFACE_TYPE.TransactionController).to(TransactionController);
-container.bind<ITransactionService>(INTERFACE_TYPE.TransactionService).to(TransactionService);
-container.bind<IUserService>(INTERFACE_TYPE.UserService).to(UserService);
+
 container.bind<ILogger>(INTERFACE_TYPE.Logger).to(Logger);
+container.bind<IUserService>(INTERFACE_TYPE.UserService).to(UserService);
+container.bind<ITransactionService>(INTERFACE_TYPE.TransactionService).to(TransactionService);
 
 const controller = container.get<TransactionController>(INTERFACE_TYPE.TransactionController);
 
