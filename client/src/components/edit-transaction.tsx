@@ -1,8 +1,3 @@
-import { useAddNewTransactionMutation } from '@/redux/api/transactionApiSlice';
-import { useState } from 'react';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-
 import {
   Select,
   SelectContent,
@@ -10,10 +5,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useUpdateTransactionMutation } from '@/redux/api/transactionApiSlice';
+import { useState } from 'react';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
 
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -52,7 +52,7 @@ const categories = [
   },
 ];
 
-const transactionSchema = z.object({
+const editTransactionSchema = z.object({
   title: z.string().min(3, {
     message: 'Title must be at least 3 characters long',
   }),
@@ -65,7 +65,7 @@ const transactionSchema = z.object({
   transactionType: z.enum(['expense', 'income']),
 });
 
-export type TransactionForm = z.infer<typeof transactionSchema>;
+export type EditTransactionForm = z.infer<typeof editTransactionSchema>;
 
 import {
   Dialog,
@@ -76,31 +76,36 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Plus } from 'lucide-react';
+import { ITransaction } from '@/types';
+import { Edit } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function CreateTransaction() {
+export default function EditTransaction({ transaction }: { transaction: ITransaction }) {
   const [open, setOpen] = useState(false);
-  const [addTransactionNote] = useAddNewTransactionMutation();
+  const [updateTransaction] = useUpdateTransactionMutation();
 
-  const form = useForm<z.infer<typeof transactionSchema>>({
-    resolver: zodResolver(transactionSchema),
+  const form = useForm<EditTransactionForm>({
+    resolver: zodResolver(editTransactionSchema),
     defaultValues: {
-      title: '',
-      amount: 0,
-      category: '',
-      transactionType: 'expense',
+      title: transaction.title,
+      amount: transaction.amount,
+      category: transaction.category,
+      transactionType: transaction.transactionType,
     },
   });
 
-  async function onSubmit(values: z.infer<typeof transactionSchema>) {
-    console.log(values);
+  async function onSubmit(values: EditTransactionForm) {
     try {
-      await addTransactionNote(values);
+      await updateTransaction({
+        id: transaction._id,
+        transaction: {
+          ...values,
+        },
+      });
       form.reset();
-      toast.success('Transaction added');
+      toast.success('Transaction updated');
       setOpen(false);
-      console.log('Transaction added');
+      console.log('Transaction updated');
     } catch (error) {
       console.error(error);
     }
@@ -111,14 +116,13 @@ export default function CreateTransaction() {
       <div className="flex items-center gap-2">
         <DialogTrigger asChild>
           <Button variant="outline">
-            <span className="mr-2">Create Transaction</span>
-            <Plus />
+            <Edit />
           </Button>
         </DialogTrigger>
       </div>
       <DialogContent className="max-h-screen overflow-y-auto sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-2xl">Create new transaction</DialogTitle>
+          <DialogTitle className="text-2xl">Update a transaction</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -130,8 +134,9 @@ export default function CreateTransaction() {
                 <FormItem>
                   <FormLabel>Title</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input placeholder="..." {...field} />
                   </FormControl>
+                  <FormDescription>This is description.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -143,8 +148,9 @@ export default function CreateTransaction() {
                 <FormItem>
                   <FormLabel>Amount</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <Input placeholder="..." {...field} />
                   </FormControl>
+                  <FormDescription>This is amount.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -209,7 +215,7 @@ export default function CreateTransaction() {
                   Cancel
                 </Button>
               </DialogClose>
-              <Button type="submit">Submit</Button>
+              <Button type="submit">Save</Button>
             </div>
           </form>
         </Form>

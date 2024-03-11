@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useSendLogoutMutation } from '@/redux/api/authApiSlice';
 import { useEffect } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Toaster } from 'sonner';
 
 export default function Layout() {
   const session = useAuth();
@@ -56,6 +57,7 @@ export default function Layout() {
         </div>
       </header>
       <Outlet />
+      <Toaster />
     </div>
   );
 }

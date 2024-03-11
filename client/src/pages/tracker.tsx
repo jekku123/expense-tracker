@@ -1,12 +1,17 @@
 import CreateTransaction from '@/components/create-transaction';
-import { Button } from '@/components/ui/button';
+import TransactionTable from '@/components/transaction-table';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useTitle } from '@/hooks/useTitle';
-import {
-  useDeleteTransactionMutation,
-  useGetAllTransactionsQuery,
-  useUpdateTransactionMutation,
-} from '@/redux/api/transactionApiSlice';
+import { useGetAllTransactionsQuery } from '@/redux/api/transactionApiSlice';
 import { ITransaction } from '@/types';
+
+function getWeekNumber(d: Date) {
+  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay() || 7));
+  const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil(((date.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
+  return weekNo;
+}
 
 export default function Tracker() {
   useTitle('Tracker');
@@ -23,51 +28,96 @@ export default function Tracker() {
     refetchOnMountOrArgChange: true,
   });
 
-  const [updateTransaction] = useUpdateTransactionMutation();
-  const [deleteTransaction] = useDeleteTransactionMutation();
+  // const totalExpenses = transactions?.reduce(
+  //   (acc: number, transaction: ITransaction) =>
+  //     transaction.transactionType === 'expense' ? acc + transaction.amount : acc,
+  //   0
+  // );
 
-  const categories = transactions?.map((transaction: ITransaction) => transaction.category);
-  const uniqueCategories = Array.from(new Set(categories));
-  console.log(uniqueCategories);
+  const totalExpensesThisMonth = transactions?.reduce(
+    (acc: number, transaction: ITransaction) =>
+      transaction.transactionType === 'expense' &&
+      new Date(transaction.createdAt).getMonth() === new Date().getMonth() &&
+      new Date(transaction.createdAt).getFullYear() === new Date().getFullYear()
+        ? acc + transaction.amount
+        : acc,
+    0
+  );
+
+  const totalExpensesThisYear = transactions?.reduce(
+    (acc: number, transaction: ITransaction) =>
+      transaction.transactionType === 'expense' &&
+      new Date(transaction.createdAt).getFullYear() === new Date().getFullYear()
+        ? acc + transaction.amount
+        : acc,
+    0
+  );
+
+  const totalExpensesThisWeek = transactions?.reduce(
+    (acc: number, transaction: ITransaction) =>
+      transaction.transactionType === 'expense' &&
+      getWeekNumber(new Date(transaction.createdAt)) === getWeekNumber(new Date()) &&
+      new Date(transaction.createdAt).getFullYear() === new Date().getFullYear()
+        ? acc + transaction.amount
+        : acc,
+    0
+  );
+
+  const totalExpensesToday = transactions?.reduce(
+    (acc: number, transaction: ITransaction) =>
+      transaction.transactionType === 'expense' &&
+      new Date(transaction.createdAt).getDate() === new Date().getDate()
+        ? acc + transaction.amount
+        : acc,
+    0
+  );
 
   return (
-    <div>
-      <h1>Tracker</h1>
-      <CreateTransaction />
+    <div className="flex flex-col w-full max-w-6xl gap-6 px-6 py-4 mx-auto">
+      <div className="flex items-center justify-between w-full">
+        <h1 className="text-4xl font-bold">Expense Tracker</h1>
+        <CreateTransaction />
+      </div>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Card>
+          <CardHeader>
+            <CardTitle>Today</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl">{totalExpensesToday} €</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>This week</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl">{totalExpensesThisWeek} €</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>This month</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl">{totalExpensesThisMonth} €</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>This year</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl">{totalExpensesThisYear} €</p>
+          </CardContent>
+        </Card>
+      </div>
       <div>
         {isLoading && <p>Loading...</p>}
         {isError && <p>{(error as { data: { message: string } }).data!.message}</p>}
-        {isSuccess &&
-          transactions &&
-          transactions.map((transaction: ITransaction) => {
-            return (
-              <div key={transaction._id}>
-                <p>{transaction.title}</p>
-                <p>{transaction.amount}</p>
-                <p>{transaction.date}</p>
-                <p>{transaction.description}</p>
-                <p>{transaction.category}</p>
-                <p>{transaction.transactionType}</p>
-
-                <Button
-                  onClick={() => {
-                    updateTransaction({
-                      id: transaction._id!,
-                      transaction: {
-                        title: 'Updated Title',
-                        amount: 100,
-                        category: 'Updated Category',
-                        transactionType: 'Updated Transaction Type',
-                      },
-                    });
-                  }}
-                >
-                  Update
-                </Button>
-                <Button onClick={() => deleteTransaction({ id: transaction._id! })}>Delete</Button>
-              </div>
-            );
-          })}
+        {isSuccess && transactions && (
+          <TransactionTable transactions={transactions as ITransaction[]} />
+        )}
       </div>
     </div>
   );
