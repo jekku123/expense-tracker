@@ -1,19 +1,15 @@
-# Node.js Express MongoDB Clean Architecture example
+# Expense Tracker Backend
 
-This is a basic Node.js application template using Express.js for the server and MongoDB with Mongoose for data storage.
+This is the backend for the expense tracker app. It is built using Node.js, Express.js, and MongoDB.
 
-## Project Structure
+## Structure
 
-The project follows an MVC (Model-View-Controller) architecture with the following structure:
+The backend is build using MSC (Model, Service, Controller) architecture. The `models` folder contains the schema for the MongoDB collections. The `services` folder contains the business logic for the application. The `controllers` folder contains the route handlers.
 
-- app/controllers: Contains Express.js controllers responsible for handling HTTP requests and coordinating interactions between clients and the application.
+## Features
 
-app/repositories: Implements the repository pattern and provides methods for interacting with the MongoDB database.
-
-app/interactors: Acts as the business logic layer and encapsulates operations related to entities. It coordinates interactions between controllers and repositories, performing tasks such as validation, transformation, and coordination.
-
-app/models: Defines Mongoose schemas for entities, specifying the structure of the data stored in the MongoDB database.
-
-app/interfaces: Contains TypeScript interfaces defining contracts for repositories and interactors, specifying the methods that must be implemented by concrete classes.
-
-server.ts: Configures the Express.js server, sets up routes, and initializes the application.
+- Inversify for dependency injection
+- Authentication using JWT
+- CRUD operations for transactions
+- Error handling middleware
+- Logger service using Winston

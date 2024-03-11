@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
-import { INTERFACE_TYPE } from '../utils/dependencies';
+import { INTERFACE_TYPE } from '../config/dependencies';
 
+import AppError from '../config/errors/AppError';
+import { ERROR_MESSAGES } from '../config/errors/errorMessages';
+import { STATUS_CODES } from '../config/errors/statusCodes';
 import { IAuthService } from '../types/IAuthService';
-import AppError from '../utils/errors/AppError';
-import { ERROR_MESSAGES } from '../utils/errors/errorMessages';
-import { STATUS_CODES } from '../utils/errors/statusCodes';
 
 @injectable()
 export class AuthController {

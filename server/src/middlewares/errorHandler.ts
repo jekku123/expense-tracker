@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { JsonWebTokenError } from 'jsonwebtoken';
+import AppError from '../config/errors/AppError';
+import { ERROR_MESSAGES } from '../config/errors/errorMessages';
+import { STATUS_CODES } from '../config/errors/statusCodes';
 import Logger from '../services/logger.service';
-import AppError from '../utils/errors/AppError';
-import { ERROR_MESSAGES } from '../utils/errors/errorMessages';
-import { STATUS_CODES } from '../utils/errors/statusCodes';
 
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
   const logger = new Logger();

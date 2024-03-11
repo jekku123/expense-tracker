@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
+import { INTERFACE_TYPE } from '../config/dependencies';
 import { ITransactionService } from '../types/ITransactionService';
-import { INTERFACE_TYPE } from '../utils/dependencies';
 
 @injectable()
 export class TransactionController {

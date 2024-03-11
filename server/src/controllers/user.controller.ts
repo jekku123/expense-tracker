@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
+import { INTERFACE_TYPE } from '../config/dependencies';
 import { IUserService } from '../types/IUserService';
-import { INTERFACE_TYPE } from '../utils/dependencies';
 
 @injectable()
 export class UserController {

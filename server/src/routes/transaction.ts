@@ -1,9 +1,9 @@
 import express from 'express';
 import { Container } from 'inversify';
+import { INTERFACE_TYPE } from '../config/dependencies';
 import { TransactionController } from '../controllers/transaction.controller';
 import { validateToken } from '../middlewares/validateToken';
 import { UserService } from '../services/user.service';
-import { INTERFACE_TYPE } from '../utils/dependencies';
 
 import Logger from '../services/logger.service';
 import { TransactionService } from '../services/transaction.service';

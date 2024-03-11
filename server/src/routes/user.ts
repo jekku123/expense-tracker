@@ -1,9 +1,9 @@
 import express from 'express';
 import { Container } from 'inversify';
+import { INTERFACE_TYPE } from '../config/dependencies';
 import { UserController } from '../controllers/user.controller';
 import { validateToken } from '../middlewares/validateToken';
 import { UserService } from '../services/user.service';
-import { INTERFACE_TYPE } from '../utils/dependencies';
 
 import Logger from '../services/logger.service';
 import { ILogger } from '../types/ILogger';

@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt, { JwtPayload, Secret } from 'jsonwebtoken';
 
-import AppError from '../utils/errors/AppError';
-import { ERROR_MESSAGES } from '../utils/errors/errorMessages';
+import AppError from '../config/errors/AppError';
+import { ERROR_MESSAGES } from '../config/errors/errorMessages';
 
 export const JWT_SECRET: Secret = Bun.env.ACCESS_TOKEN_SECRET as string;
 

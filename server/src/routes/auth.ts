@@ -1,5 +1,6 @@
 import express from 'express';
 import { Container } from 'inversify';
+import { INTERFACE_TYPE } from '../config/dependencies';
 import { AuthController } from '../controllers/auth.controller';
 import { AuthService } from '../services/auth.service';
 import Logger from '../services/logger.service';
@@ -7,7 +8,6 @@ import { TokenService } from '../services/token.service';
 import { IAuthService } from '../types/IAuthService';
 import { ILogger } from '../types/ILogger';
 import { ITokenService } from '../types/ITokenService';
-import { INTERFACE_TYPE } from '../utils/dependencies';
 
 const router = express.Router();
 

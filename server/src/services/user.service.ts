@@ -1,14 +1,14 @@
 import { inject, injectable } from 'inversify';
 
-import { ERROR_MESSAGES } from '../utils/errors/errorMessages';
+import { ERROR_MESSAGES } from '../config/errors/errorMessages';
 
+import AppError from '../config/errors/AppError';
+import { STATUS_CODES } from '../config/errors/statusCodes';
 import User, { UserType } from '../models/user';
-import AppError from '../utils/errors/AppError';
-import { STATUS_CODES } from '../utils/errors/statusCodes';
 
+import { INTERFACE_TYPE } from '../config/dependencies';
 import { ILogger } from '../types/ILogger';
 import { IUserService } from '../types/IUserService';
-import { INTERFACE_TYPE } from '../utils/dependencies';
 
 @injectable()
 export class UserService implements IUserService {
