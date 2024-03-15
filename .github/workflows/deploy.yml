@@ -20,7 +20,7 @@ jobs:
 
   deploy-frontend:
     needs: build-frontend
-    runs-on: aws-ec2
+    runs-on: self-hosted
     steps:
       - name: Pull image from docker hub
         run: docker pull jekku123/mern-test-react:latest
@@ -43,8 +43,7 @@ jobs:
         run: docker push jekku123/mern-test:latest
 
   deploy-backend:
-    needs:
-      - build-backend
+    needs: build-backend
     runs-on: self-hosted
     steps:
       - name: Pull image from docker hub
