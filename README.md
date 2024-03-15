@@ -14,6 +14,8 @@ This is a full-stack expense tracker application built to practise the MERN stac
 - Shadcn UI
 - Docker
 - Docker Compose
+- GitHub Actions
+- AWS EC2
 
 ## Features
 
