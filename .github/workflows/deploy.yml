@@ -30,6 +30,7 @@ jobs:
         run: docker run -d -p 5173:80 --name mern-test-react-container jekku123/mern-test-react
 
   build-backend:
+    needs: deploy-frontend
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
@@ -42,7 +43,8 @@ jobs:
         run: docker push jekku123/mern-test:latest
 
   deploy-backend:
-    needs: build-backend
+    needs:
+      - build-backend
     runs-on: self-hosted
     steps:
       - name: Pull image from docker hub
