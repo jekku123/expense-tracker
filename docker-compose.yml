@@ -18,12 +18,14 @@ services:
   web:
     build:
       context: ./client
+      target: development
     environment:
       NODE_ENV: ${NODE_ENV}
     ports:
       - 5173:5173
     depends_on:
       - api
+    command: bun dev
     volumes:
       - ./client:/usr/src/app
       - /usr/src/app/node_modules
