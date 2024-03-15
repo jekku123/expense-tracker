@@ -2,16 +2,9 @@ import CreateTransaction from '@/components/create-transaction';
 import TransactionTable from '@/components/transaction-table';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useTitle } from '@/hooks/useTitle';
+import { getWeekNumber } from '@/lib/utils';
 import { useGetAllTransactionsQuery } from '@/redux/api/transactionApiSlice';
 import { ITransaction } from '@/types';
-
-function getWeekNumber(d: Date) {
-  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-  date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay() || 7));
-  const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
-  const weekNo = Math.ceil(((date.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
-  return weekNo;
-}
 
 export default function Tracker() {
   useTitle('Tracker');
