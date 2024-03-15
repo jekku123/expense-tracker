@@ -6,5 +6,5 @@ WORKDIR /usr/src/app
 COPY package.json bun.lockb ./
 RUN bun install
 COPY . .
-EXPOSE 8080
+EXPOSE 4000
 CMD ["bun", "dev"]

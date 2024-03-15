@@ -13,7 +13,7 @@ import userRoutes from './routes/user';
 
 const app = express();
 
-const PORT = Bun.env.PORT || 8080;
+const PORT = Bun.env.PORT || 4000;
 const MONGO_URI = Bun.env.MONGO_URI as string;
 
 app.use(express.json());
