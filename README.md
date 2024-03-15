@@ -1,6 +1,19 @@
 # Expense Tracker
 
-This is a full-stack expense tracker application built using the MERN stack. The backend is built using Node.js, Express.js, and MongoDB. The frontend is built using React.js, Redux Toolkit, Zod and Shadcn UI.
+This is a full-stack expense tracker application built to practise the MERN stack. It allows users to add, edit, and delete transactions and view a summary of their expenses.
+
+## Technologies
+
+- TypeScript
+- Node.js
+- Express
+- MongoDB
+- React.js
+- Redux Toolkit
+- Zod
+- Shadcn UI
+- Docker
+- Docker Compose
 
 ## Features
 
@@ -13,11 +26,10 @@ This is a full-stack expense tracker application built using the MERN stack. The
 - Error handling middleware
 - Logger service for errors and logs using Winston
 - MongoDB with Mongoose
-- Security using Helmet and CORS
 
 ### Frontend
 
-- Authentication management using Redux Toolkit
+- State management using Redux Toolkit
 - Persist login option
 - Add, edit, and delete transactions
 - List of transactions
