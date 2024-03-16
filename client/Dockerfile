@@ -2,6 +2,12 @@
 
 FROM oven/bun:1 as build
 
+ARG VITE_SERVER_URL
+ARG VITE_NODE_ENV
+
+ENV VITE_SERVER_URL=$VITE_SERVER_URL
+ENV VITE_NODE_ENV=$VITE_NODE_ENV
+
 WORKDIR /usr/src/app
 COPY package.json bun.lockb ./
 RUN bun install
