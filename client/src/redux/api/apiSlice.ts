@@ -4,10 +4,11 @@ import { Mutex } from 'async-mutex';
 import { logout, setCredentials } from '../features/authSlice';
 import { RootState } from '../store';
 
-// const baseUrl = import.meta.env.VITE_SERVER_URL as string;
+const baseUrl = import.meta.env.VITE_SERVER_URL as string;
+// baseUrl: 'http://13.48.129.24:4000/api',
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://13.48.129.24:4000/api',
+  baseUrl: `${baseUrl}/api`,
   credentials: 'include',
   prepareHeaders: (headers, api) => {
     const token = (api.getState() as RootState).auth.token;
