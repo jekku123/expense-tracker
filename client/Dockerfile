@@ -7,7 +7,6 @@ COPY package.json bun.lockb ./
 RUN bun install
 COPY . .
 # EXPOSE 5173
-ENV NODE_ENV production
 RUN bun run build
 # CMD ["bun", "dev"]
 

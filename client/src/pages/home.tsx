@@ -9,8 +9,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-6xl gap-6 px-6 py-4 mx-auto grow">
-      <h1 className="font-semibold text-7xl">Expense Tracker</h1>
-      <p className="text-lg text-muted-foreground">
+      <h1 className="font-semibold text-center text-7xl">Expense Tracker</h1>
+      <p className="text-lg text-center text-muted-foreground">
         Welcome to the Expense Tracker app! This app is a simple way to keep track of your expenses.
       </p>
       {session ? (
