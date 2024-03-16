@@ -6,6 +6,7 @@ import { RootState } from '../store';
 
 const baseUrl = import.meta.env.VITE_SERVER_URL as string;
 // baseUrl: 'http://13.48.129.24:4000/api',
+console.log('baseUrl:', baseUrl);
 
 const baseQuery = fetchBaseQuery({
   baseUrl: `${baseUrl}/api`,

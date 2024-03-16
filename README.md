@@ -1,4 +1,4 @@
-# Expense Tracker
+# Expense Tracker ![Deployment](https://github.com/jekku123/expense-tracker/actions/workflows/deploy.yml/badge.svg)
 
 This is a full-stack expense tracker application built to practise the MERN stack. It allows users to add, edit, and delete transactions and view a summary of their expenses.
 
