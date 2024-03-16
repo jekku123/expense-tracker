@@ -22,7 +22,6 @@ export default function PersistLogin() {
         try {
           await refresh({});
           setTrueSuccess(true);
-          console.log('refresh token verified');
         } catch (err) {
           console.error(err);
         }
