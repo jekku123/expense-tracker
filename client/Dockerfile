@@ -12,16 +12,7 @@ WORKDIR /usr/src/app
 COPY package.json bun.lockb ./
 RUN bun install
 COPY . .
-# EXPOSE 5173
 RUN bun run build
-# CMD ["bun", "dev"]
-
-# FROM node:${NODE_VERSION}-alpine as development
-# WORKDIR /usr/src/app
-# COPY package*.json .
-# RUN npm install
-# COPY . .
-# RUN npm run build
 
 FROM nginx:1.23-alpine as production
 WORKDIR /usr/share/nginx/html
