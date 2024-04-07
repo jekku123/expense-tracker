@@ -5,6 +5,7 @@ import { useTitle } from '@/hooks/useTitle';
 import { getWeekNumber } from '@/lib/utils';
 import { useGetAllTransactionsQuery } from '@/redux/api/transactionApiSlice';
 import { ITransaction } from '@/types';
+import { useMemo } from 'react';
 
 export default function Tracker() {
   useTitle('Tracker');
@@ -17,7 +18,6 @@ export default function Tracker() {
     error,
   } = useGetAllTransactionsQuery('transactions', {
     // pollingInterval: 15000,
-    // refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
   });
 
@@ -27,43 +27,51 @@ export default function Tracker() {
   //   0
   // );
 
-  const totalExpensesThisMonth = transactions?.reduce(
-    (acc: number, transaction: ITransaction) =>
-      transaction.transactionType === 'expense' &&
-      new Date(transaction.createdAt).getMonth() === new Date().getMonth() &&
-      new Date(transaction.createdAt).getFullYear() === new Date().getFullYear()
-        ? acc + transaction.amount
-        : acc,
-    0
-  );
+  const totalExpensesThisMonth = useMemo(() => {
+    return transactions?.reduce(
+      (acc: number, transaction: ITransaction) =>
+        transaction.transactionType === 'expense' &&
+        new Date(transaction.createdAt).getMonth() === new Date().getMonth() &&
+        new Date(transaction.createdAt).getFullYear() === new Date().getFullYear()
+          ? acc + transaction.amount
+          : acc,
+      0
+    );
+  }, [transactions]);
 
-  const totalExpensesThisYear = transactions?.reduce(
-    (acc: number, transaction: ITransaction) =>
-      transaction.transactionType === 'expense' &&
-      new Date(transaction.createdAt).getFullYear() === new Date().getFullYear()
-        ? acc + transaction.amount
-        : acc,
-    0
-  );
+  const totalExpensesThisYear = useMemo(() => {
+    return transactions?.reduce(
+      (acc: number, transaction: ITransaction) =>
+        transaction.transactionType === 'expense' &&
+        new Date(transaction.createdAt).getFullYear() === new Date().getFullYear()
+          ? acc + transaction.amount
+          : acc,
+      0
+    );
+  }, [transactions]);
 
-  const totalExpensesThisWeek = transactions?.reduce(
-    (acc: number, transaction: ITransaction) =>
-      transaction.transactionType === 'expense' &&
-      getWeekNumber(new Date(transaction.createdAt)) === getWeekNumber(new Date()) &&
-      new Date(transaction.createdAt).getFullYear() === new Date().getFullYear()
-        ? acc + transaction.amount
-        : acc,
-    0
-  );
+  const totalExpensesThisWeek = useMemo(() => {
+    return transactions?.reduce(
+      (acc: number, transaction: ITransaction) =>
+        transaction.transactionType === 'expense' &&
+        getWeekNumber(new Date(transaction.createdAt)) === getWeekNumber(new Date()) &&
+        new Date(transaction.createdAt).getFullYear() === new Date().getFullYear()
+          ? acc + transaction.amount
+          : acc,
+      0
+    );
+  }, [transactions]);
 
-  const totalExpensesToday = transactions?.reduce(
-    (acc: number, transaction: ITransaction) =>
-      transaction.transactionType === 'expense' &&
-      new Date(transaction.createdAt).getDate() === new Date().getDate()
-        ? acc + transaction.amount
-        : acc,
-    0
-  );
+  const totalExpensesToday = useMemo(() => {
+    return transactions?.reduce(
+      (acc: number, transaction: ITransaction) =>
+        transaction.transactionType === 'expense' &&
+        new Date(transaction.createdAt).getDate() === new Date().getDate()
+          ? acc + transaction.amount
+          : acc,
+      0
+    );
+  }, [transactions]);
 
   return (
     <div className="flex flex-col w-full max-w-6xl gap-6 px-6 py-4 mx-auto">
@@ -72,38 +80,10 @@ export default function Tracker() {
         <CreateTransaction />
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Today</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl">{totalExpensesToday} €</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>This week</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl">{totalExpensesThisWeek} €</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>This month</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl">{totalExpensesThisMonth} €</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>This year</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl">{totalExpensesThisYear} €</p>
-          </CardContent>
-        </Card>
+        <SummaryCard title="Today" value={totalExpensesToday!} />
+        <SummaryCard title="This week" value={totalExpensesThisWeek!} />
+        <SummaryCard title="This month" value={totalExpensesThisMonth!} />
+        <SummaryCard title="This year" value={totalExpensesThisYear!} />
       </div>
       <div>
         {isLoading && <p>Loading...</p>}
@@ -113,5 +93,18 @@ export default function Tracker() {
         )}
       </div>
     </div>
+  );
+}
+
+function SummaryCard({ title, value }: { title: string; value: number }) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-2xl">{value} €</p>
+      </CardContent>
+    </Card>
   );
 }

@@ -8,24 +8,11 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { formatDate } from '@/lib/utils';
-import { useDeleteTransactionMutation } from '@/redux/api/transactionApiSlice';
 import { ITransaction } from '@/types';
-import { X } from 'lucide-react';
-import { useEffect } from 'react';
-import { toast } from 'sonner';
+import { DeleteTransaction } from './delete-transaction';
 import EditTransaction from './edit-transaction';
-import { Button } from './ui/button';
 
 export default function TransactionTable({ transactions }: { transactions: ITransaction[] }) {
-  const [deleteTransaction, { isLoading: isDeleting, isSuccess: isDeleteSuccess }] =
-    useDeleteTransactionMutation();
-
-  useEffect(() => {
-    if (isDeleteSuccess) {
-      toast.success('Transaction deleted');
-    }
-  }, [isDeleteSuccess]);
-
   return (
     <div className="p-2 pb-4 overflow-x-auto border rounded-md">
       <Table>
@@ -49,14 +36,7 @@ export default function TransactionTable({ transactions }: { transactions: ITran
               <TableCell>
                 <div className="flex gap-2">
                   <EditTransaction transaction={transaction} />
-                  <Button
-                    size="icon"
-                    disabled={isDeleting}
-                    variant="outline"
-                    onClick={() => deleteTransaction({ id: transaction._id! })}
-                  >
-                    <X />
-                  </Button>
+                  <DeleteTransaction transactionId={transaction._id!} />
                 </div>
               </TableCell>
             </TableRow>
