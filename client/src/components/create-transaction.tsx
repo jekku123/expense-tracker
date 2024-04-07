@@ -83,7 +83,7 @@ export default function CreateTransaction() {
   const [open, setOpen] = useState(false);
   const [addTransactionNote] = useAddNewTransactionMutation();
 
-  const form = useForm<z.infer<typeof transactionSchema>>({
+  const form = useForm<TransactionForm>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
       title: '',
@@ -93,14 +93,15 @@ export default function CreateTransaction() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof transactionSchema>) {
+  async function onSubmit(values: TransactionForm) {
     try {
-      await addTransactionNote(values);
+      await addTransactionNote(values).unwrap();
       form.reset();
       toast.success('Transaction added');
       setOpen(false);
     } catch (error) {
       console.error(error);
+      toast.error('Failed to add transaction');
     }
   }
 

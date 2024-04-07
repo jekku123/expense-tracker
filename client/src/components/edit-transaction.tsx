@@ -101,7 +101,7 @@ export default function EditTransaction({ transaction }: { transaction: ITransac
         transaction: {
           ...values,
         },
-      });
+      }).unwrap();
       form.reset();
       toast.success('Transaction updated');
       setOpen(false);
