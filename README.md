@@ -2,7 +2,7 @@
 
 This is a full-stack expense tracker application built to practise the MERN stack. It allows users to add, edit, and delete transactions and view a summary of their expenses.
 
-Check out the live demo [here](http://13.48.129.24:5173/).
+Check out the live demo [here](http://13.48.129.24:80/).
 
 ## Technologies
 
