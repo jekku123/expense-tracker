@@ -16,7 +16,7 @@ export default function PersistLogin() {
 
   useEffect(() => {
     // Why live like this?
-    if (effectRan.current === true || import.meta.env.VITE_NODE_ENV !== 'development') {
+    if (effectRan.current === true || import.meta.env.VITE_NODE_ENV === 'development') {
       const verifyRefreshToken = async () => {
         console.log('verifying refresh token');
         try {
