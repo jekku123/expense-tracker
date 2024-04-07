@@ -1,5 +1,6 @@
 import { useAuth } from '@/hooks/useAuth';
 import { useSendLogoutMutation } from '@/redux/api/authApiSlice';
+import { Loader2 } from 'lucide-react';
 import { Outlet } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import Header from './header';
@@ -9,7 +10,11 @@ export default function Layout() {
   const [sendLogout, { isLoading }] = useSendLogoutMutation();
 
   if (isLoading) {
-    return <p>Logging out...</p>;
+    return (
+      <div className="flex flex-col items-center justify-center w-full min-h-screen">
+        <Loader2 className="animate-spin" />
+      </div>
+    );
   }
 
   return (
