@@ -41,7 +41,7 @@ export default function PersistLogin() {
   if (!persist) {
     content = <Outlet />;
   } else if (isLoading) {
-    content = <p>Loading...</p>;
+    content = null;
   } else if (isError) {
     content = <Outlet />;
   } else if (isSuccess && trueSuccess) {

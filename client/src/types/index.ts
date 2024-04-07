@@ -18,3 +18,10 @@ export interface IUser {
     email: string;
   };
 }
+
+export interface IAuth {
+  user: {
+    username: string;
+    email: string;
+  };
+}
