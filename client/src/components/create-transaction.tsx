@@ -94,13 +94,11 @@ export default function CreateTransaction() {
   });
 
   async function onSubmit(values: z.infer<typeof transactionSchema>) {
-    console.log(values);
     try {
       await addTransactionNote(values);
       form.reset();
       toast.success('Transaction added');
       setOpen(false);
-      console.log('Transaction added');
     } catch (error) {
       console.error(error);
     }

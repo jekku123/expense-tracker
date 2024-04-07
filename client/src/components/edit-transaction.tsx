@@ -105,9 +105,9 @@ export default function EditTransaction({ transaction }: { transaction: ITransac
       form.reset();
       toast.success('Transaction updated');
       setOpen(false);
-      console.log('Transaction updated');
     } catch (error) {
       console.error(error);
+      toast.error('Failed to update transaction');
     }
   }
 
@@ -115,7 +115,7 @@ export default function EditTransaction({ transaction }: { transaction: ITransac
     <Dialog open={open} onOpenChange={setOpen}>
       <div className="flex items-center gap-2">
         <DialogTrigger asChild>
-          <Button variant="outline">
+          <Button variant="outline" size="icon">
             <Edit />
           </Button>
         </DialogTrigger>

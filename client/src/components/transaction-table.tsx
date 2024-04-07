@@ -32,7 +32,7 @@ export default function TransactionTable({ transactions }: { transactions: ITran
               <TableCell>{formatDate(transaction.createdAt)}</TableCell>
               <TableCell>{transaction.title}</TableCell>
               <TableCell>{transaction.category}</TableCell>
-              <TableCell className="text-right">{transaction.amount}</TableCell>
+              <TableCell className="text-right">{transaction.amount} €</TableCell>
               <TableCell>
                 <div className="flex gap-2">
                   <EditTransaction transaction={transaction} />
