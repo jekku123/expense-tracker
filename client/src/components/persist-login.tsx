@@ -19,9 +19,7 @@ export default function PersistLogin() {
   useEffect(() => {
     // Why live like this?
     if (effectRan.current === true || NODE_ENV === 'production') {
-      console.log('NODEENV:', NODE_ENV);
       const verifyRefreshToken = async () => {
-        console.log('verifying refresh token');
         try {
           await refresh({});
           setTrueSuccess(true);
