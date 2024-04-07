@@ -27,7 +27,7 @@ jobs:
       - name: Delete Old Container
         run: docker rm -f mern-test-react-container
       - name: Run docker container
-        run: docker run -d -p 80:80 --name mern-test-react-container jekku123/mern-test-react
+        run: docker run -d -p 5173:80 --name mern-test-react-container jekku123/mern-test-react
 
   build-backend:
     needs: deploy-frontend
