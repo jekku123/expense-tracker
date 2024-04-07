@@ -54,13 +54,6 @@ const transactionSchema = new Schema<ITransaction, TransactionModel, Transaction
   { timestamps: true }
 );
 
-// transactionSchema.pre('save', async function (next) {
-//   if (this.isModified('password')) {
-//     this.password = await Bun.password.hash(this.password);
-//   }
-//   next();
-// });
-
 const Transaction = mongoose.model('Transaction', transactionSchema);
 
 export default Transaction;

@@ -17,7 +17,7 @@ export class TransactionService implements ITransactionService {
   }
 
   async getTransactions(userId: string): Promise<ITransaction[]> {
-    const transactions = await Transaction.find({ userId });
+    const transactions = await Transaction.find({ userId }).sort({ createdAt: -1 });
     if (!transactions) {
       throw new AppError('Transactions not found', 404);
     }
