@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
+const NODE_ENV = import.meta.env.VITE_NODE_ENV as string;
+
 export default function PersistLogin() {
   const [persist] = usePersist();
   const token = useSelector(selectCurrentToken);
@@ -16,7 +18,8 @@ export default function PersistLogin() {
 
   useEffect(() => {
     // Why live like this?
-    if (effectRan.current === true || import.meta.env.VITE_NODE_ENV !== 'production') {
+    if (effectRan.current === true || NODE_ENV === 'production') {
+      console.log('NODEENV:', NODE_ENV);
       const verifyRefreshToken = async () => {
         console.log('verifying refresh token');
         try {
