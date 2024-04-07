@@ -16,7 +16,6 @@ This is a full-stack expense tracker application built to practise the MERN stac
 - Nginx
 - GitHub Actions
 - AWS EC2
--
 
 ## Features
 
