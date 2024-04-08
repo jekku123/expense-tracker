@@ -47,30 +47,13 @@ Check out the live demo [here](http://13.48.129.24:5173/) (**Note**: Domain is n
 
 - Docker
 - Docker Compose
-- MongoDB URI
 
 ### Steps
 
 1. Clone the repository
-2. Create a `.env` file in the root directory and add the following environment variables:
 
-```bash
-MONGO_URI="your_mongo_uri"
-ACCESS_TOKEN_SECRET="your-secret"
-REFRESH_TOKEN_SECRET="your-secret"
-VITE_SERVER_URL="http://localhost:4000"
-```
-
-3. Run the following command to start the application:
+2. Run the following command to start the application:
 
 ```shell
-make up
-```
-
-4. Open `http://localhost:5173` in your browser
-
-- To stop the application, run:
-
-```shell
-make down
+./setup.sh
 ```
