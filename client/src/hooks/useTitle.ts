@@ -3,9 +3,8 @@ import { useEffect } from 'react';
 export function useTitle(title: string) {
   useEffect(() => {
     const prevTitle = document.title;
-    document.title = title;
+    document.title = `Expense Tracker | ${title}`;
 
-    // Return a cleanup function
     return () => {
       document.title = prevTitle;
     };
