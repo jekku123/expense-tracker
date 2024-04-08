@@ -4,13 +4,20 @@ services:
   api:
     build:
       context: ./server
+    container_name: backend
+    restart: always
     environment:
       NODE_ENV: ${NODE_ENV}
-      MONGO_URI: ${MONGO_URI}
+      MONGO_URI: ${DEV_MONGO_URI}
       ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
       REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET}
     ports:
       - 4000:4000
+    depends_on:
+      - mongodb
+    networks:
+      - react-express
+      - express-mongo
     volumes:
       - ./server:/usr/src/app
       - /usr/src/app/node_modules
@@ -19,14 +26,40 @@ services:
     build:
       context: ./client
       target: build
+    container_name: frontend
     environment:
       VITE_NODE_ENV: ${NODE_ENV}
       VITE_SERVER_URL: ${VITE_SERVER_URL}
     ports:
       - 5173:5173
+    networks:
+      - react-express
+    stdin_open: true
+    restart: always
     depends_on:
       - api
     command: bun dev
     volumes:
       - ./client:/usr/src/app
       - /usr/src/app/node_modules
+
+  mongodb:
+    image: mongo:latest
+    restart: always
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${DEV_MONGO_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${DEV_MONGO_PASS}
+    ports:
+      - '27017:27017'
+    networks:
+      - express-mongo
+    volumes:
+      - ./server/mongo_data:/data/db
+
+networks:
+  react-express:
+  express-mongo:
+
+volumes:
+  mongo_data:
